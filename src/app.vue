@@ -12,8 +12,6 @@ div(class="mx-auto my-10 space-y-4" style="width: 400px;")
 <script lang="ts">
 import {defineComponent, reactive, toRefs} from 'vue'
 
-import HelloWorld from './components/HelloWorld.vue'
-
 export default defineComponent({
   components: {
     HelloWorld,
