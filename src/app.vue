@@ -13,10 +13,6 @@ div(class="mx-auto my-10 space-y-4" style="width: 400px;")
 import {defineComponent, reactive, toRefs} from 'vue'
 
 export default defineComponent({
-  components: {
-    HelloWorld,
-  },
-
   setup () {
     const state = reactive({
       currencies: [] as {code: string, rate: number, name: string}[],
