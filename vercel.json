@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    {"source": "/data", "destination": "https://currency.world/exchange_rates/all/CNY"}
+  ]
+}
