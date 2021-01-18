@@ -1,8 +1,9 @@
 .DS_Store
 
 node_modules
+.mock
 dist
-*.local
+.env
 
 .idea
 
