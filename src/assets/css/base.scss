@@ -2,6 +2,10 @@
 
 @tailwind base;
 
+svg {
+  @apply fill-current;
+}
+
 @tailwind components;
 
 @tailwind utilities;
