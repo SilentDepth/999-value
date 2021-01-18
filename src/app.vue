@@ -15,7 +15,7 @@ import {defineComponent, reactive, toRefs} from 'vue'
 export default defineComponent({
   setup () {
     const state = reactive({
-      currencies: [] as {code: string, rate: number, name: string}[],
+      currencies: [] as Array<{code: string, rate: number, name: string}>,
     })
 
     fetch('/data').then(res => res.text())
@@ -26,9 +26,9 @@ export default defineComponent({
         state.currencies =
           Array.from(items)
             .map(el => ({
-              code: el.querySelector('.code').textContent,
-              rate: Number(el.querySelector('.rate').textContent),
-              name: el.querySelector('.curname').textContent,
+              code: el.querySelector('.code')!.textContent!,
+              rate: Number(el.querySelector('.rate')!.textContent!),
+              name: el.querySelector('.curname')!.textContent!,
             }))
             .filter(it => it.rate <= 1)
             .sort((a, b) => a.rate - b.rate)
