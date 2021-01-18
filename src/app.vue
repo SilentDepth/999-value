@@ -1,5 +1,5 @@
 <template lang="pug">
-div(class="relative mx-auto my-10 space-y-4" style="width: 400px;")
+div(class="relative mx-auto my-10 px-4 space-y-4" style="max-width: 400px;")
   div(:ref="el => rows.push(el)" v-for="{code, name, result} of currencies" class="flex justify-between items-start")
     div(:class="{'px-3 -mx-3 py-2 pt-1 -my-2 text-white bg-red-600 rounded': code === CURRENCY}")
       p(class="text-2xl tabular-nums")
@@ -7,8 +7,8 @@ div(class="relative mx-auto my-10 space-y-4" style="width: 400px;")
         span(class="font-bold") {{ code }}
       p(:class="['text-sm', {'text-trueGray-500': code !== CURRENCY}]") {{ name }}
     div(class="leading-8 tabular-nums text-trueGray-600") {{ result.toFixed(2) }} CNY
-  div(v-show="pointerTop" class="absolute right-0 -mr-3 h-1.5 w-16 bg-red-600 rounded-l-full shadow flex items-center" :style="{marginTop: 0, top: pointerTop + 'px'}")
-    span(class="absolute left-full top-1/2 transform -translate-y-1/2 px-1 text-white bg-red-600 rounded") {{ AMOUNT }}
+  div(v-show="pointerTop" class="absolute right-1 h-1.5 w-24 bg-red-600 rounded-l-full shadow flex justify-end items-center" :style="{marginTop: 0, top: pointerTop + 'px'}")
+    span(class="px-1 text-white bg-red-600 rounded shadow") {{ AMOUNT }}
 
 transition(
   enter-from-class="opacity-0"
