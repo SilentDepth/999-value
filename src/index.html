@@ -4,8 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>999's Value</title>
+  <script>
+    if (window.matchMedia) {
+      // TODO: Maybe safe to use ES6 after browser detection?
+      var mql = window.matchMedia('(prefers-color-scheme: dark)')
+      function changeMode () {
+        document.documentElement.classList.toggle('dark', mql.matches)
+      }
+      mql.addEventListener('change', changeMode)
+      changeMode()
+    }
+  </script>
 </head>
-<body>
+<body class="text-black dark:text-trueGray-300 bg-white dark:bg-black">
   <div id="app"></div>
   <script type="module" src="./main.ts"></script>
 </body>
