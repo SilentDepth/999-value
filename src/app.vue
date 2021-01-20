@@ -18,6 +18,8 @@ div(class="relative mx-auto my-10 px-4 space-y-4" style="max-width: 400px;")
   )
     span(class="px-1 text-white bg-red-600 rounded shadow") {{ AMOUNT }}
 
+theme-switch
+
 transition(
   enter-from-class="opacity-0"
   leave-to-class  ="opacity-0"
@@ -32,10 +34,16 @@ transition(
 <script lang="ts">
 import {defineComponent, nextTick, reactive, toRefs} from 'vue'
 
+import ThemeSwitch from './components/theme-switch.vue'
+
 const CURRENCY = import.meta.env.VITE_CURRENCY
 const AMOUNT = Number(import.meta.env.VITE_AMOUNT)
 
 export default defineComponent({
+  components: {
+    ThemeSwitch,
+  },
+
   setup () {
     const refs = reactive({
       rows: [] as HTMLElement[],

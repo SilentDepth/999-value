@@ -8,11 +8,7 @@
     if (window.matchMedia) {
       // TODO: Maybe safe to use ES6 after browser detection?
       var mql = window.matchMedia('(prefers-color-scheme: dark)')
-      function changeMode () {
-        document.documentElement.classList.toggle('dark', mql.matches)
-      }
-      mql.addEventListener('change', changeMode)
-      changeMode()
+      document.documentElement.classList.toggle('dark', mql.matches)
     }
   </script>
 </head>
