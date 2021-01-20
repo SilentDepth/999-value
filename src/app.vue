@@ -1,5 +1,5 @@
 <template lang="pug">
-div(class="relative mx-auto my-10 px-4 space-y-4" style="max-width: 400px;")
+div(class="relative mx-auto my-10 px-4 pt-3 sm:pt-0 space-y-4" style="max-width: 400px;")
   div(
     v-for="{code, name, result} of currencies"
     :ref="el => rows.push(el)"
