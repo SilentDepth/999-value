@@ -1,8 +1,8 @@
 <template lang="pug">
-div(class="relative mx-auto my-10 px-4 pt-3 sm:pt-0 space-y-4" style="max-width: 400px;")
+div(class="relative mx-auto px-4 pt-3 sm:pt-0 space-y-4" style="max-width: 400px;")
   div(
     v-for="{code, name, result} of currencies"
-    :ref="el => rows.push(el)"
+    :ref="el => iterateRow(el, code, result)"
     class="flex justify-between items-start"
   )
     div(:class="{'px-3 -mx-3 py-2 pt-1 -my-2 text-white bg-red-600 rounded': code === CURRENCY}")
@@ -12,6 +12,7 @@ div(class="relative mx-auto my-10 px-4 pt-3 sm:pt-0 space-y-4" style="max-width:
       p(:class="['text-sm', {'text-trueGray-500 dark:text-trueGray-400': code !== CURRENCY}]") {{ name }}
     div(class="leading-8 tabular-nums text-trueGray-600 dark:text-trueGray-400") {{ result.toFixed(2) }} CNY
   div(
+    ref="pointer"
     v-show="pointerTop"
     class="absolute right-1 h-1.5 w-24 bg-red-600 rounded-l-full shadow flex justify-end items-center"
     :style="{marginTop: 0, top: pointerTop + 'px'}"
@@ -47,6 +48,8 @@ export default defineComponent({
   setup () {
     const refs = reactive({
       rows: [] as HTMLElement[],
+      pointer: undefined as undefined | HTMLElement,
+      currentCurrency: undefined as undefined | HTMLElement,
     })
     const state = reactive({
       currencies: [] as Array<{code: string, name: string, result: number}>,
@@ -74,7 +77,16 @@ export default defineComponent({
         state.spinner = false
         await nextTick()
         movePointer()
+        await nextTick()
+        scrollToCurrent()
       })
+
+    function iterateRow (el: HTMLElement, code: string, result: number) {
+      refs.rows.push(el)
+      if (code === CURRENCY) {
+        refs.currentCurrency = el
+      }
+    }
 
     function movePointer () {
       const end = state.currencies.findIndex(it => AMOUNT < it.result)
@@ -87,9 +99,24 @@ export default defineComponent({
       state.pointerTop = startBottom + p * (endTop - startBottom) - 3 // pointer itself is 6px height, so pull back 3px as half of it
     }
 
+    function scrollToCurrent () {
+      const scrollTop = document.documentElement.scrollTop
+      const {top: cTop, height: cHeight} = refs.currentCurrency!.getBoundingClientRect()
+      const currencyTop = scrollTop + cTop
+      const {top: pTop, height: pHeight} = refs.pointer!.getBoundingClientRect()
+      const pointerTop = scrollTop + pTop
+      const top = Math.min(currencyTop, pointerTop)
+      const bottom = Math.max(currencyTop + cHeight, pointerTop + pHeight)
+      document.documentElement.scrollTo({
+        top: (top + bottom) / 2 - window.innerHeight / 2,
+        behavior: 'smooth',
+      })
+    }
+
     return {
       ...toRefs(refs),
       ...toRefs(state),
+      iterateRow,
       CURRENCY,
       AMOUNT,
     }
