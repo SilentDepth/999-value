@@ -8,9 +8,4 @@ export default {
     vue(),
     mock(),
   ],
-  root: './src',
-  build: {
-    outDir: '../dist',
-    emptyOutDir: true,
-  },
 } as UserConfig
