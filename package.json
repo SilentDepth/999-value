@@ -1,6 +1,6 @@
 {
-  "name": "silent.land__999",
-  "version": "1.0.0",
+  "license": "MIT",
+  "author": "SilentDepth <silentdepth@outlook.com>",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
