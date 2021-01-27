@@ -3,7 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   purge: [
-    './src/index.html',
+    './index.html',
     './src/**/*.vue',
   ],
   darkMode: 'class',
