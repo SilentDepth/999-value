@@ -28,8 +28,8 @@ transition(
   leave-active-class="transition duration-500 ease-in-out"
   appear
 )
-  div(v-show="spinner" class="fixed inset-0 m-auto w-12 h-12 bg-black bg-opacity-50 rounded-md flex justify-center items-center")
-    svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8 text-white animate-spin"): path(d="M18.364 5.636L16.95 7.05A7 7 0 1 0 19 12h2a9 9 0 1 1-2.636-6.364z")
+  div(v-show="spinner" class="fixed inset-0 m-auto w-12 h-12 bg-black dark:bg-white bg-opacity-50 dark:bg-opacity-50 rounded-md flex justify-center items-center")
+    svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8 text-white dark:text-black animate-spin"): path(d="M18.364 5.636L16.95 7.05A7 7 0 1 0 19 12h2a9 9 0 1 1-2.636-6.364z")
 </template>
 
 <script lang="ts">
