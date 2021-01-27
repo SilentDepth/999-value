@@ -24,25 +24,16 @@ button(class="absolute top-0 right-0 p-4 overflow-hidden group" @click="dark = !
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive, toRefs, watch} from 'vue'
+import {defineComponent} from 'vue'
+
+import useDark from '/src/composables/dark'
 
 export default defineComponent({
   setup () {
-    const state = reactive({
-      dark: document.documentElement.classList.contains('dark'),
-    })
-
-    watch(() => state.dark, value => {
-      document.documentElement.classList.toggle('dark', value)
-    })
-
-    const mql = window.matchMedia?.('(prefers-color-scheme: dark)')
-    mql.addEventListener('change', () => {
-      state.dark = mql.matches
-    })
+    const {dark} = useDark()
 
     return {
-      ...toRefs(state),
+      dark,
     }
   },
 })
