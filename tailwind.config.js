@@ -1,23 +1,13 @@
-const colors = require('tailwindcss/colors')
-const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('windicss/colors')
 
 module.exports = {
-  purge: [
-    './index.html',
-    './src/**/*.vue',
-  ],
   darkMode: 'class',
   theme: {
     extend: {
       colors,
       fontFamily: {
-        sans: ['Inter var', 'Inter', ...defaultTheme.fontFamily.sans],
+        sans: ['Inter var', 'Inter'],
       },
-    },
-  },
-  variants: {
-    extend: {
-      backgroundOpacity: ['dark'],
     },
   },
 }
