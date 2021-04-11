@@ -9,7 +9,7 @@ export default function mock (): Plugin {
   return {
     name: 'api-mock',
     configureServer (server) {
-      server.app.use('/data', async (req, res) => {
+      server.middlewares.use('/data', async (req, res) => {
         if (!fs.existsSync(MOCK_FILE)) {
           const data = await fetch('https://currency.world/exchange_rates/all/CNY', {
             headers: {'Accept-Language': 'zh-CN'},
