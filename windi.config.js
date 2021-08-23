@@ -1,13 +1,12 @@
-const colors = require('windicss/colors')
+import { defineConfig } from 'windicss/helpers'
 
-module.exports = {
+export default defineConfig({
   darkMode: 'class',
   theme: {
     extend: {
-      colors,
       fontFamily: {
         sans: ['Inter var', 'Inter'],
       },
     },
   },
-}
+})

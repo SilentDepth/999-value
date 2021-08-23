@@ -5,6 +5,12 @@ node_modules
 dist
 .env
 
+.yarn/*
+!.yarn/cache
+!.yarn/plugins
+!.yarn/releases
+.pnp.*
+
 .idea
 
 .vercel
