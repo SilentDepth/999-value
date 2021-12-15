@@ -1,4 +1,4 @@
-import {Plugin} from 'vite'
+import { Plugin } from 'vite'
 import fs from 'fs-extra'
 import path from 'path'
 import fetch from 'node-fetch'
@@ -12,7 +12,7 @@ export default function mock (): Plugin {
       server.middlewares.use('/data', async (req, res) => {
         if (!fs.existsSync(MOCK_FILE)) {
           const data = await fetch('https://currency.world/exchange_rates/all/CNY', {
-            headers: {'Accept-Language': 'zh-CN'},
+            headers: { 'Accept-Language': 'zh-CN' },
           }).then(res => res.text())
           fs.ensureDirSync(path.resolve(MOCK_FILE, '..'))
           fs.writeFileSync(MOCK_FILE, data, 'utf-8')

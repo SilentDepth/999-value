@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.12",
+    "@types/node-fetch": "^3.0.3",
     "@vitejs/plugin-vue": "^1.6.2",
     "@vue/compiler-sfc": "^3.2.11",
     "fs-extra": "^10.0.0",
