@@ -1,4 +1,4 @@
-import {reactive, toRefs, watch} from 'vue'
+import { reactive, toRefs, watch } from 'vue'
 
 let loaded = false
 
@@ -18,7 +18,7 @@ export default function useDark () {
 
     watch(() => state.dark, dark => {
       document.documentElement.classList.toggle('dark', dark)
-    }, {immediate: true})
+    }, { immediate: true })
   }
 
   return refs

@@ -1,5 +1,5 @@
 <template lang="pug">
-div(class="relative mx-auto px-4 pt-3 sm:pt-0 space-y-4" style="max-width: 400px;")
+div(class="relative mx-auto px-4 pt-3 sm:pt-0 space-y-4 font-sans" style="max-width: 400px;")
   div(
     v-for="{code, name, result} of currencies"
     :ref="el => iterateRow(el, code, result)"
@@ -9,8 +9,8 @@ div(class="relative mx-auto px-4 pt-3 sm:pt-0 space-y-4" style="max-width: 400px
       p(class="text-2xl tabular-nums")
         | 999&nbsp;
         span(class="font-bold") {{ code }}
-      p(:class="['text-sm', {'text-trueGray-500 dark:text-trueGray-400': code !== CURRENCY}]") {{ name }}
-    div(class="leading-8 tabular-nums text-trueGray-600 dark:text-trueGray-400") {{ result.toFixed(2) }} CNY
+      p(:class="['text-sm', {'text-neutral-500 dark:text-neutral-400': code !== CURRENCY}]") {{ name }}
+    div(class="leading-8 tabular-nums text-neutral-600 dark:text-neutral-400") {{ result.toFixed(2) }} CNY
   div(
     ref="pointer"
     v-show="pointerTop"

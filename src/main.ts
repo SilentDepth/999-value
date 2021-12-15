@@ -1,5 +1,5 @@
-import 'virtual:windi.css'
-import 'virtual:windi-devtools'
+import '@unocss/reset/tailwind.css'
+import 'uno.css'
 import { createApp } from 'vue'
 
 import App from './app.vue'
