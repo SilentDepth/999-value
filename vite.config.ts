@@ -8,7 +8,7 @@ import mock from './mock'
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({ reactivityTransform: true }),
     unocss(unocssConfig),
     mock(),
   ],

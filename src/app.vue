@@ -1,3 +1,81 @@
+<script lang="ts" setup>
+import { nextTick } from 'vue'
+
+import ThemeSwitch from './components/theme-switch.vue'
+
+const CURRENCY = import.meta.env.VITE_CURRENCY
+const AMOUNT = Number(import.meta.env.VITE_AMOUNT)
+
+let rows = $ref<HTMLElement[]>([])
+let pointer = $ref<HTMLElement>()
+let currentCurrency = $ref<HTMLElement>()
+
+type CurrencyInfo = {
+  code: string
+  name: string
+  result: number
+}
+let currencies = $ref<CurrencyInfo[]>([])
+let pointerTop = $ref(0)
+let spinner = $ref(true)
+
+function iterateRow (el: HTMLElement, code: string, result: number) {
+  rows.push(el)
+  if (code === CURRENCY) {
+    currentCurrency = el
+  }
+}
+
+function movePointer () {
+  const end = currencies.findIndex(it => AMOUNT < it.result)
+  const start = end - 1
+  const startValue = currencies[start].result
+  const endValue = currencies[end].result
+  const p = (AMOUNT - startValue) / (endValue - startValue)
+  const startBottom = rows[start].offsetTop + rows[start].offsetHeight
+  const endTop = rows[end].offsetTop
+  pointerTop = startBottom + p * (endTop - startBottom) - 3 // pointer itself is 6px height, so pull back 3px as half of it
+}
+
+function scrollToCurrent () {
+  const scrollTop = document.documentElement.scrollTop
+  const { top: cTop, height: cHeight } = currentCurrency!.getBoundingClientRect()
+  const currencyTop = scrollTop + cTop
+  const { top: pTop, height: pHeight } = pointer!.getBoundingClientRect()
+  const pointerTop = scrollTop + pTop
+  const top = Math.min(currencyTop, pointerTop)
+  const bottom = Math.max(currencyTop + cHeight, pointerTop + pHeight)
+  document.documentElement.scrollTo({
+    top: (top + bottom) / 2 - window.innerHeight / 2,
+    behavior: 'smooth',
+  })
+}
+
+fetch('/data')
+  .then(res => res.text())
+  .then(html => {
+    const doc = document.implementation.createHTMLDocument()
+    doc.body.innerHTML = html
+    const items = doc.querySelectorAll('.ratestable > .item')
+    let _currencies = Array.from(items)
+      .map(el => ({
+        code: el.querySelector('.code')!.textContent!,
+        name: el.querySelector('.curname')!.textContent!,
+        result: 999 * Number(el.querySelector('.rate')!.textContent!),
+      }))
+      .filter(it => it.result <= 1000)
+      .sort((a, b) => a.result - b.result)
+    currencies = _currencies.slice(Math.min(_currencies.findIndex(it => it.code === 'JPY'), _currencies.findIndex(it => it.result >= 50)))
+  })
+  .then(async () => {
+    spinner = false
+    await nextTick()
+    movePointer()
+    await nextTick()
+    scrollToCurrent()
+  })
+</script>
+
 <template lang="pug">
 div(class="relative mx-auto px-4 pt-3 sm:pt-0 space-y-4 font-sans" style="max-width: 400px;")
   div(
@@ -31,95 +109,3 @@ transition(
   div(v-show="spinner" class="fixed inset-0 m-auto w-12 h-12 bg-black dark:bg-white bg-opacity-50 dark:bg-opacity-50 rounded-md flex justify-center items-center")
     svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-white dark:text-black animate-spin"): path(d="M18.364 5.636L16.95 7.05A7 7 0 1 0 19 12h2a9 9 0 1 1-2.636-6.364z")
 </template>
-
-<script lang="ts">
-import {defineComponent, nextTick, reactive, toRefs} from 'vue'
-
-import ThemeSwitch from './components/theme-switch.vue'
-
-const CURRENCY = import.meta.env.VITE_CURRENCY
-const AMOUNT = Number(import.meta.env.VITE_AMOUNT)
-
-export default defineComponent({
-  components: {
-    ThemeSwitch,
-  },
-
-  setup () {
-    const refs = reactive({
-      rows: [] as HTMLElement[],
-      pointer: undefined as undefined | HTMLElement,
-      currentCurrency: undefined as undefined | HTMLElement,
-    })
-    const state = reactive({
-      currencies: [] as Array<{code: string, name: string, result: number}>,
-      pointerTop: 0,
-      spinner: true,
-    })
-
-    fetch('/data').then(res => res.text())
-      .then(html => {
-        const doc = document.implementation.createHTMLDocument()
-        doc.body.innerHTML = html
-        const items = doc.querySelectorAll('.ratestable > .item')
-        let currencies =
-          Array.from(items)
-            .map(el => ({
-              code: el.querySelector('.code')!.textContent!,
-              name: el.querySelector('.curname')!.textContent!,
-              result: 999 * Number(el.querySelector('.rate')!.textContent!),
-            }))
-            .filter(it => it.result <= 1000)
-            .sort((a, b) => a.result - b.result)
-        state.currencies = currencies.slice(Math.min(currencies.findIndex(it => it.code === 'JPY'), currencies.findIndex(it => it.result >= 50)))
-      })
-      .then(async () => {
-        state.spinner = false
-        await nextTick()
-        movePointer()
-        await nextTick()
-        scrollToCurrent()
-      })
-
-    function iterateRow (el: HTMLElement, code: string, result: number) {
-      refs.rows.push(el)
-      if (code === CURRENCY) {
-        refs.currentCurrency = el
-      }
-    }
-
-    function movePointer () {
-      const end = state.currencies.findIndex(it => AMOUNT < it.result)
-      const start = end - 1
-      const startValue = state.currencies[start].result
-      const endValue = state.currencies[end].result
-      const p = (AMOUNT - startValue) / (endValue - startValue)
-      const startBottom = refs.rows[start].offsetTop + refs.rows[start].offsetHeight
-      const endTop = refs.rows[end].offsetTop
-      state.pointerTop = startBottom + p * (endTop - startBottom) - 3 // pointer itself is 6px height, so pull back 3px as half of it
-    }
-
-    function scrollToCurrent () {
-      const scrollTop = document.documentElement.scrollTop
-      const {top: cTop, height: cHeight} = refs.currentCurrency!.getBoundingClientRect()
-      const currencyTop = scrollTop + cTop
-      const {top: pTop, height: pHeight} = refs.pointer!.getBoundingClientRect()
-      const pointerTop = scrollTop + pTop
-      const top = Math.min(currencyTop, pointerTop)
-      const bottom = Math.max(currencyTop + cHeight, pointerTop + pHeight)
-      document.documentElement.scrollTo({
-        top: (top + bottom) / 2 - window.innerHeight / 2,
-        behavior: 'smooth',
-      })
-    }
-
-    return {
-      ...toRefs(refs),
-      ...toRefs(state),
-      iterateRow,
-      CURRENCY,
-      AMOUNT,
-    }
-  },
-})
-</script>
