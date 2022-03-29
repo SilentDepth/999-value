@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import useDark from '~/composables/dark'
+import { useDark, useToggle } from '@vueuse/core'
 
-const { dark } = useDark()
+let isDark = $(useDark())
+const toggleDark = useToggle($$(isDark))
 </script>
 
 <template lang="pug">
-button(class="absolute top-0 right-0 p-4 overflow-hidden group" @click="dark = !dark")
+button(class="absolute top-0 right-0 p-4 overflow-hidden group" @click="toggleDark")
   div(class="w-5 h-5")
   transition(
     enter-from-class="rotate-90"
@@ -14,7 +15,7 @@ button(class="absolute top-0 right-0 p-4 overflow-hidden group" @click="dark = !
     leave-active-class="transform"
   )
     svg(
-      v-if="dark"
+      v-if="isDark"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"

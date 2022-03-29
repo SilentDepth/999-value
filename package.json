@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@unocss/reset": "^0.30.6",
+    "@vueuse/core": "^8.2.0",
     "vue": "^3.2.31"
   },
   "devDependencies": {
