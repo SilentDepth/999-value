@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { nextTick } from 'vue'
+import { $fetch } from 'ohmyfetch'
 
 import ThemeSwitch from './components/theme-switch.vue'
 
@@ -51,8 +52,7 @@ function scrollToCurrent () {
   })
 }
 
-fetch('/data')
-  .then(res => res.text())
+$fetch('/data', { parseResponse: txt => txt })
   .then(html => {
     const doc = document.implementation.createHTMLDocument()
     doc.body.innerHTML = html
