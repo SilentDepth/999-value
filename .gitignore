@@ -1,15 +1,11 @@
 .DS_Store
 
 node_modules
-.mock
-dist
+.nuxt
+.nitro
+.cache
+.output
 .env
-
-.yarn/*
-!.yarn/cache
-!.yarn/plugins
-!.yarn/releases
-.pnp.*
 
 .idea
 
