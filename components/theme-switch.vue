@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useDark, useToggle } from '@vueuse/core'
-
 let isDark = $(useDark())
 const toggleDark = useToggle($$(isDark))
 </script>
