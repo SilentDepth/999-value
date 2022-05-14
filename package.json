@@ -9,9 +9,11 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
+    "@notionhq/client": "^1.0.4",
     "@unocss/nuxt": "^0.32.13",
     "@vueuse/core": "^8.4.2",
     "@vueuse/nuxt": "^8.4.2",
+    "cheerio": "1.0.0-rc.10",
     "nuxt": "3.0.0-rc.3",
     "pug": "^3.0.2"
   },

@@ -1,49 +1,39 @@
 <script lang="ts" setup>
-const CURRENCY = import.meta.env.VITE_CURRENCY
-const AMOUNT = Number(import.meta.env.VITE_AMOUNT)
+import type { CurrencyInfo } from './server/api/currencies'
+import type { Config } from './server/api/config'
+
+const [{ data: _currencies }, { data: _config }] = await Promise.all([
+  useAsyncData<CurrencyInfo[]>('currencies', () => $fetch('/api/currencies'), {
+    server: false,
+    default: () => [],
+  }),
+  useAsyncData<Partial<Config>>('config', () => $fetch('/api/config'), {
+    server: false,
+    default: () => ({}),
+  }),
+])
+const currencies = $(_currencies)
+const config = $(_config)
 
 let rows = $ref<HTMLElement[]>([])
 let pointer = $ref<HTMLElement>()
 let currentCurrency = $ref<HTMLElement>()
-
-type CurrencyInfo = {
-  code: string
-  name: string
-  result: number
-}
-const { data: currencies } = $(await useAsyncData<string, any, (string) => CurrencyInfo[]>('data', () => $fetch('/data'), {
-  server: false,
-  default: () => '',
-  transform: html => {
-    const doc = document.implementation.createHTMLDocument()
-    doc.body.innerHTML = html
-    let currencies = Array.from(doc.querySelectorAll('.ratestable > .item'))
-      .map(el => ({
-        code: el.querySelector('.code')!.textContent!,
-        name: el.querySelector('.curname')!.textContent!,
-        result: 999 * Number(el.querySelector('.rate')!.textContent!),
-      }))
-      .filter(it => it.result <= 1000)
-      .sort((a, b) => a.result - b.result)
-    return currencies.slice(Math.min(currencies.findIndex(it => it.code === 'JPY'), currencies.findIndex(it => it.result >= 50)))
-  },
-}))
 let pointerTop = $ref(0)
 let spinner = $ref(true)
 
 function iterateRow (el: HTMLElement, code: string, result: number) {
   rows.push(el)
-  if (code === CURRENCY) {
+  if (code === config.currency) {
     currentCurrency = el
   }
 }
 
 function movePointer () {
-  const end = currencies.findIndex(it => AMOUNT < it.result)
+  const end = currencies.findIndex(it => config.value < it.result)
   const start = end - 1
   const startValue = currencies[start].result
   const endValue = currencies[end].result
-  const p = (AMOUNT - startValue) / (endValue - startValue)
+  const p = (config.value - startValue) / (endValue - startValue)
   const startBottom = rows[start].offsetTop + rows[start].offsetHeight
   const endTop = rows[end].offsetTop
   pointerTop = startBottom + p * (endTop - startBottom) - 3 // pointer itself is 6px height, so pull back 3px as half of it
@@ -82,11 +72,11 @@ div#app(class="min-h-screen py-10 text-black dark:text-neutral-300 bg-white dark
       :ref="el => iterateRow(el, code, result)"
       class="flex justify-between items-start"
     )
-      div(:class="{ 'px-3 -mx-3 py-2 pt-1 -my-2 text-white bg-red-600 rounded': code === CURRENCY }")
+      div(:class="{ 'px-3 -mx-3 py-2 pt-1 -my-2 text-white bg-red-600 rounded': code === config.currency }")
         p(class="text-2xl tabular-nums")
           | 999&nbsp;
           span(class="font-bold") {{ code }}
-        p(:class="['text-sm', { 'text-neutral-500 dark:text-neutral-400': code !== CURRENCY }]") {{ name }}
+        p(:class="['text-sm', { 'text-neutral-500 dark:text-neutral-400': code !== config.currency }]") {{ name }}
       div(class="leading-8 tabular-nums text-neutral-600 dark:text-neutral-400") {{ result.toFixed(2) }} CNY
     div(
       ref="pointer"
@@ -94,7 +84,7 @@ div#app(class="min-h-screen py-10 text-black dark:text-neutral-300 bg-white dark
       class="absolute right-1 h-1.5 w-24 bg-red-600 rounded-l-full shadow flex justify-end items-center"
       :style="{ marginTop: 0, top: pointerTop + 'px' }"
     )
-      span(class="px-1 text-white bg-red-600 rounded shadow") {{ AMOUNT }}
+      span(class="px-1 text-white bg-red-600 rounded shadow") {{ config.value }}
 
 ThemeSwitch
 
