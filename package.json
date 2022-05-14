@@ -9,10 +9,10 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
-    "@unocss/nuxt": "^0.32.7",
-    "@vueuse/core": "^8.3.1",
-    "@vueuse/nuxt": "^8.3.1",
-    "nuxt": "^3.0.0-rc.1",
+    "@unocss/nuxt": "^0.32.13",
+    "@vueuse/core": "^8.4.2",
+    "@vueuse/nuxt": "^8.4.2",
+    "nuxt": "3.0.0-rc.3",
     "pug": "^3.0.2"
   },
   "engines": {
