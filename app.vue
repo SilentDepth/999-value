@@ -53,14 +53,12 @@ function scrollToCurrent () {
   })
 }
 
-watch($$(currencies), async arr => {
-  if (arr.length) {
-    spinner = false
-    await nextTick()
-    movePointer()
-    await nextTick()
-    scrollToCurrent()
-  }
+whenever(() => currencies.length && config.value, async () => {
+  spinner = false
+  await nextTick()
+  movePointer()
+  await nextTick()
+  scrollToCurrent()
 })
 </script>
 
