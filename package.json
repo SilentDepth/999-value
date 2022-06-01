@@ -10,10 +10,10 @@
   },
   "devDependencies": {
     "@notionhq/client": "^1.0.4",
-    "@unocss/nuxt": "^0.32.13",
-    "@vueuse/core": "^8.4.2",
-    "@vueuse/nuxt": "^8.4.2",
-    "cheerio": "1.0.0-rc.10",
+    "@unocss/nuxt": "^0.37.1",
+    "@vueuse/core": "^8.6.0",
+    "@vueuse/nuxt": "^8.6.0",
+    "cheerio": "1.0.0-rc.11",
     "nuxt": "3.0.0-rc.3",
     "pug": "^3.0.2"
   },
