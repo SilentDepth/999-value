@@ -2,6 +2,9 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   devtools: true,
+  experimental: {
+    componentIslands: true,
+  },
   app: {
     head: {
       htmlAttrs: {
