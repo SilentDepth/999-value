@@ -1,4 +1,3 @@
-import createProxyAgent from 'https-proxy-agent'
 import { Client } from '@notionhq/client'
 
 export type Config = {
@@ -6,10 +5,7 @@ export type Config = {
   value: number
 }
 
-const notion = new Client({
-  auth: process.env.NOTION_TOKEN,
-  agent: process.env.NODE_ENV === 'development' ? createProxyAgent(process.env.http_proxy) : null,
-})
+const notion = new Client({ auth: process.env.NOTION_TOKEN })
 
 export default defineEventHandler(async () => {
   const { results: [data] } = await notion.databases.query({

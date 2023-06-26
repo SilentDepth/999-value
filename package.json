@@ -10,11 +10,14 @@
   },
   "devDependencies": {
     "@notionhq/client": "^1.0.4",
-    "@unocss/nuxt": "^0.37.1",
-    "@vueuse/core": "^8.6.0",
-    "@vueuse/nuxt": "^8.6.0",
-    "cheerio": "1.0.0-rc.11",
-    "nuxt": "3.0.0-rc.3",
+    "@nuxt/devtools": "^0.6.3",
+    "@unocss/nuxt": "^0.53.3",
+    "@vue-macros/nuxt": "^1.3.12",
+    "@vue/language-plugin-pug": "latest",
+    "@vueuse/core": "^10.2.0",
+    "@vueuse/nuxt": "^10.2.0",
+    "cheerio": "1.0.0-rc.12",
+    "nuxt": "3.6.0",
     "pug": "^3.0.2"
   },
   "engines": {

@@ -1,7 +1,7 @@
-import { defineNuxtConfig } from 'nuxt'
+import { defineNuxtConfig } from 'nuxt/config'
 
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  devtools: true,
   app: {
     head: {
       htmlAttrs: {
@@ -10,7 +10,7 @@ export default defineNuxtConfig({
       },
       title: '999’s Value',
       link: [
-        { rel: 'icon', type: 'image/png', href: '/favicon.png', size: '120x120' },
+        { rel: 'icon', type: 'image/png', href: '/favicon.png', sizes: '120x120' },
         { rel: 'stylesheet', href: 'https://rsms.me/inter/inter.css' },
       ],
     },
@@ -18,10 +18,8 @@ export default defineNuxtConfig({
   css: [
     '@unocss/reset/tailwind.css',
   ],
-  experimental: {
-    reactivityTransform: true,
-  },
   modules: [
+    '@vue-macros/nuxt',
     '@unocss/nuxt',
     '@vueuse/nuxt',
   ],

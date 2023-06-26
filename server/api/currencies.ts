@@ -1,4 +1,3 @@
-import createProxyAgent from 'https-proxy-agent'
 import * as cheerio from 'cheerio'
 
 export type CurrencyInfo = {
@@ -15,8 +14,6 @@ export default defineEventHandler(async () => {
   if (Date.now() - lastCheck > MAX_AGE) {
     const html = await $fetch<string>('https://currency.world/exchange_rates/all/CNY', {
       headers: { 'Accept-Language': 'zh-CN' },
-      // @ts-ignore
-      agent: process.env.NODE_ENV === 'development' ? createProxyAgent(process.env.http_proxy) : null,
     })
 
     const q = cheerio.load(html)
