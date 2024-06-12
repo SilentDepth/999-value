@@ -1,26 +1,27 @@
 {
-  "license": "MIT",
+  "private": true,
   "author": "SilentDepth <silentdepth@outlook.com>",
   "type": "module",
   "scripts": {
-    "dev": "nuxt dev",
     "build": "nuxt build",
+    "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview"
   },
-  "devDependencies": {
-    "@notionhq/client": "^1.0.4",
-    "@nuxt/devtools": "^0.6.3",
-    "@unocss/nuxt": "^0.53.3",
-    "@vue-macros/nuxt": "^1.3.12",
-    "@vue/language-plugin-pug": "latest",
-    "@vueuse/core": "^10.2.0",
-    "@vueuse/nuxt": "^10.2.0",
-    "cheerio": "1.0.0-rc.12",
-    "nuxt": "3.6.0",
-    "pug": "^3.0.2"
+  "dependencies": {
+    "@notionhq/client": "^2.2.15",
+    "@nuxt/fonts": "^0.7.0",
+    "@unocss/reset": "^0.60.4",
+    "cheerio": "^1.0.0-rc.12",
+    "nuxt": "^3.12.1",
+    "ts-pattern": "^5.1.2",
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.3"
   },
-  "engines": {
-    "node": ">= 14.0.0"
+  "devDependencies": {
+    "@biomejs/biome": "1.8.1",
+    "@unocss/nuxt": "^0.60.4",
+    "@vue/language-plugin-pug": "latest",
+    "pug": "^3.0.3"
   }
 }
